@@ -150,6 +150,16 @@ def main():
     )
     siemplify.end(output_message, result_value, status)
 
+from . import TimeDurationCalculator as mod  # это работает внутри самого файла!
+
+class TimeDurationCalculator:
+    def run(self, product, session):
+        mod.siemplify = product
+        mod.SiemplifyAction = lambda: product
+        product.result = session
+        product.LOGGER = session
+        return mod.main()
+
 
 if __name__ == "__main__":
     main()
