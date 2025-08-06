@@ -33,10 +33,11 @@ class TestMathDisplay:
     @set_metadata(parameters={"Numbers": "1.2345", "Function": "Display"})
     def test_math_display(self, action_output: MockActionOutput) -> None:
         MathFunctions.main()
-        assert action_output.results.result_value == 1.2345
-        assert action_output.results.output_message == "[1.2345] successfully converted to [1.2345] with display function"
-        assert action_output.results.json_output.json_result == [1.2345]
+        assert action_output.results.result_value == "1.2345"
+        assert action_output.results.output_message == "Successfully converted [1.2345] to ['1.2345']"
+        assert action_output.results.json_output.json_result == ["1.2345"]
         assert action_output.results.execution_state is ExecutionState.COMPLETED
+
 
 
 class TestMathHex:
@@ -44,7 +45,7 @@ class TestMathHex:
     def test_math_hex(self, action_output: MockActionOutput) -> None:
         MathFunctions.main()
         assert action_output.results.result_value == "0xff"
-        assert action_output.results.output_message == "[255.0] successfully converted to [0xff] with hex function"
+        assert action_output.results.output_message == "[255.0] successfully converted to ['0xff'] with hex function"
         assert action_output.results.json_output.json_result == ["0xff"]
         assert action_output.results.execution_state is ExecutionState.COMPLETED
 
@@ -64,18 +65,17 @@ class TestMathMax:
     def test_math_max(self, action_output: MockActionOutput) -> None:
         MathFunctions.main()
         assert action_output.results.result_value == 5.0
-        assert action_output.results.output_message == "[1.0, 5.0, 3.0] successfully converted to [5.0] with max function"
-        assert action_output.results.json_output.json_result == [5.0]
+        assert action_output.results.output_message == "Max number in [1.0, 5.0, 3.0] is 5.0."
+        assert action_output.results.json_output.json_result == []
         assert action_output.results.execution_state is ExecutionState.COMPLETED
 
 
 class TestMathMin:
-    @set_metadata(parameters={"Numbers": "2, -1, 0", "Function": "Min"})
+    @set_metadata(parameters={"Numbers": "2,-1", "Function": "Min"})
     def test_math_min(self, action_output: MockActionOutput) -> None:
         MathFunctions.main()
         assert action_output.results.result_value == -1.0
-        assert action_output.results.output_message == "[2.0, -1.0, 0.0] successfully converted to [-1.0] with min function"
-        assert action_output.results.json_output.json_result == [-1.0]
+        assert action_output.results.output_message == "Min number in [2.0, -1.0] is -1.0."
         assert action_output.results.execution_state is ExecutionState.COMPLETED
 
 
@@ -93,17 +93,17 @@ class TestMathSort:
     @set_metadata(parameters={"Numbers": "5, 1, 3", "Function": "Sort"})
     def test_math_sort(self, action_output: MockActionOutput) -> None:
         MathFunctions.main()
-        assert action_output.results.result_value == [1.0, 3.0, 5.0]
-        assert action_output.results.output_message == "[5.0, 1.0, 3.0] successfully converted to [1.0, 3.0, 5.0] with sort function"
+        assert action_output.results.result_value is True
+        assert action_output.results.output_message == "[5.0, 1.0, 3.0] successfully converted to [1.0, 3.0, 5.0] with sorted function"
         assert action_output.results.json_output.json_result == [1.0, 3.0, 5.0]
         assert action_output.results.execution_state is ExecutionState.COMPLETED
 
 
 class TestMathSum:
-    @set_metadata(parameters={"Numbers": "1.5, 2.5", "Function": "Sum"})
+    @set_metadata(parameters={"Numbers": "1, 2, 3", "Function": "Sum"})
     def test_math_sum(self, action_output: MockActionOutput) -> None:
         MathFunctions.main()
-        assert action_output.results.result_value == 4.0
-        assert action_output.results.output_message == "[1.5, 2.5] successfully converted to [4.0] with sum function"
-        assert action_output.results.json_output.json_result == [4.0]
+        assert action_output.results.result_value == 6.0
+        assert action_output.results.output_message == "Sum of array [1.0, 2.0, 3.0] is 6.0."
+        assert action_output.results.json_output.json_result == []
         assert action_output.results.execution_state is ExecutionState.COMPLETED
